@@ -1,2 +1,2 @@
 # Bologna-Milano
- Bologna & Milano - Basic MSX > JavaScript
+**Bologna & Milano** - *Basic MSX > JavaScript*

@@ -98,20 +98,30 @@ if (F$=="s" || F$=="S") {
 alert ("NÍVEIS DO JOGO: \n 1. Débil mental \n 1. Aprendiz \n 2. Aventureiro \n 3. Mestre \n 4. Grande mestre");
 nivelDoJogo(5)=prompt("Em que nível deseja jogar: ");
 nivelDoJogo(5) = nivelDoJogo(5) + 2 + 2 * nivelDoJogo(5);
-jogadorDaVezç = jogadorDaVezç + 1
-112 IF jogadorDaVezç > F THEN 123
-113 IF variavelNaoDescoberta[jogadorDaVezç) <> 1 THEN 117
+jogadorDaVezç = jogadorDaVezç + 1;
+
+if (jogadorDaVezç>F) {
+    anoCorrente[5] = anoCorrente[5] + 1;
+    jogadorDaVezç = 1;
+}
+
+if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
+    if (posicialSocial[jogadorDaVezç] = -1 ) {
+        jogadorDaVezç = jogadorDaVezç + 1;    
+        
+        THEN 119
+    
+    THEN 117
 114 tempoCondenacao[jogadorDaVezç) = tempoCondenacao[jogadorDaVezç) - 1
 115 IF tempoCondenacao[jogadorDaVezç) = -1 THEN 117
 116 jogadorDaVezç = jogadorDaVezç + 1
 117 IF posicialSocial[jogadorDaVezç) = -1 THEN 119
 118 GOTO 120
-119 jogadorDaVezç = jogadorDaVezç + 1
+119 
 120 IF posicialSocial[1) < 1 AND posicialSocial[2) < 1 AND posicialSocial[3) < 1 AND posicialSocial[4) < 1 THEN 631
 121 IF jogadorDaVezç > F THEN 123
 122 GOTO 126
-123 anoCorrente[5) = anoCorrente[5) + 1
-124 jogadorDaVezç = 1
+
 125 GOTO 112
 126 IF anoCorrente[5) >= limitedeVida[jogadorDaVezç)THEN 149
 127 GOSUB 181
