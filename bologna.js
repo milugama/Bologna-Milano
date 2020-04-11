@@ -36,94 +36,105 @@ Titulo[16];
 nome[4];
 nomeComCidade[5];
 Cidade[5];
-jogadorDaVezç =0; //antiga variável E
+jogadorDaVezç = 0; //antiga variável E
 graosPopulacaoç = 0;
 O = 0; // não encontrei uso para ela.
 anoCorrente[5] = 1400;
-Cidade[1] = "GENOVA";
+Cidade[1] = "GÊNOVA";
 Cidade[2] = "MILANO";
 Cidade[3] = "VENEZA";
 Cidade[4] = "TORINO";
 Titulo[1] = "SENHOR ";
-Titulo[2] = "BARAO ";
+Titulo[2] = "BARÃO ";
 Titulo[3] = "CONDE ";
-Titulo[4] = "MARQUES ";
+Titulo[4] = "MARQUÊS ";
 Titulo[5] = "DUQUE ";
-Titulo[6] = "GRAO-DUQUE ";
-Titulo[7] = "PRINCIPE ";
+Titulo[6] = "GRÃO-DUQUE ";
+Titulo[7] = "PRÍNCIPE ";
 Titulo[8] = "* REI * ";
 Titulo[9] = "DAMA ";
 Titulo[10] = "BARONESA ";
 Titulo[11] = "CONDESSA ";
 Titulo[12] = "MARQUESA ";
 Titulo[13] = "DUQUESA ";
-Titulo[14] = "GRAO-DUQUESA ";
+Titulo[14] = "GRÃO-DUQUESA ";
 Titulo[15] = "PRINCESA ";
 Titulo[16] = "* RAINHA * ";
 //63 CLS
-F =prompt("Quantas pessoas (2 a 4) v±o participar");
-//F = VAL(F$);
-//66 CLS: BEEP
-//67 LOCATE  5, 10: PRINT"Ir±o participar"; F; "pessoas,OK?"
-//68 FOR K = 1 TO  500: NEXT K
-for(var A=1; A<=F;A++) {
-   //70 CLS: BEEP
-   nome[A]=prompt("Quem é o governante de " + Cidade[A]+ " ?");
-   //72 CLS
-   nomeComCidade[A] = nome[A] + " de " + Cidade[A];
-   F=prompt(nomeComCidade[A] +" é homem(H) ou mulher(M): ");  
-   if (F=="H") { sexo0H8[A]=8;} else {sexo0H8[A]=0};
-   taxaAlfandegaria[A] = 25;
-   taxaVendas[A] = 10;
-   impostos[A] = 5;
-   formaJustica[A] = 2;
-   Z = Math.trunc(aleatorio() * 15);
-   limitedeVida[A] = 1420 + Z;
-   caixa[A] = 1000;
-   caixa[A] = 10000;
-   reserva[A] = 5000;
-   posicialSocial[A] = 1;
-   naoDescobriAinda[A] = 1;
-   nobres[A] = 4;
-   soldados[A] = 25;
-   bispos[A] = 5;
-   comerciantes[A] = 25;
-   servos[A] = 2000;
+function inicioJogo() {
+
+    F = prompt("Quantas pessoas (2 a 4) vão participar");
+    //F = VAL(F$);
+    //66 CLS: BEEP
+    //67 LOCATE  5, 10: PRINT"Ir±o participar"; F; "pessoas,OK?"
+    //68 FOR K = 1 TO  500: NEXT K
+    for (var A = 1; A <= F; A++) {
+        //70 CLS: BEEP
+        nome[A] = prompt("Quem é o governante de " + Cidade[A] + " ?");
+        //72 CLS
+        nomeComCidade[A] = nome[A] + " de " + Cidade[A];
+        F = prompt(nomeComCidade[A] + " é homem(H) ou mulher(M): ");
+        if (F == "H") { sexo0H8[A] = 8; } else { sexo0H8[A] = 0 };
+        taxaAlfandegaria[A] = 25;
+        taxaVendas[A] = 10;
+        impostos[A] = 5;
+        formaJustica[A] = 2;
+        Z = Math.trunc(aleatorio() * 15);
+        limitedeVida[A] = 1420 + Z;
+        caixa[A] = 1000;
+        caixa[A] = 10000;
+        reserva[A] = 5000;
+        posicialSocial[A] = 1;
+        naoDescobriAinda[A] = 1;
+        nobres[A] = 4;
+        soldados[A] = 25;
+        bispos[A] = 5;
+        comerciantes[A] = 25;
+        servos[A] = 2000;
+    }
+
+    F$ = prompt("Deseja ler as instruções (S/N) ");
+    if (F$ == "s" || F$ == "S") {
+        alert("INSTRUÇÕES \n A partir de agora  você será o governante de uma cidade-estado do século  XV.\n A cada período de bom governo você receberá títulos cada vez maiores. \n A expectativa de vida naquela época era muito curta, logo você disporá de pouco tempo para governar. \n Quem primeiro chegar a REI ou RAINHA será o vencedor do jogo. \n O tamanho da torre no canto superior esquerdo indicará se suas defesas são adequadas. \n O boneco em posição alta significa terras em franca produção, caso contrário você precisará de mais servos. \n Uma boa distribuição de grãos à população, aumentará a taxa de natalidade e incentivará a migração de novos servos. \n Taxas e impostos elevados aumentam a arrecadação mas afetam a economia da nação. \n Faça um governo democrático e lembre-se que é sempre bom comprar na baixa para vender na alta.\n BOA  SORTE !");
+    }
+    alert("NÍVEIS DO JOGO: \n 1. Débil mental \n 1. Aprendiz \n 2. Aventureiro \n 3. Mestre \n 4. Grande mestre");
+    nivelDoJogo(5) = prompt("Em que nível deseja jogar: ");
+    nivelDoJogo(5) = nivelDoJogo(5) + 2 + 2 * nivelDoJogo(5);
+    jogadorDaVezç = jogadorDaVezç + 1;
 }
 
-F$=prompt("Deseja ler as instruções (S/N) "); 
-if (F$=="s" || F$=="S") {
-    alert("INSTRUÇÕES \n A partir de agora  você será o governante de uma cidade-estado do século  XV.\n A cada período de bom governo você receberá títulos cada vez maiores. \n A expectativa de vida naquela época era muito curta, logo você disporá de pouco tempo para governar. \n Quem primeiro chegar a REI ou RAINHA será o vencedor do jogo. \n O tamanho da torre no canto superior esquerdo indicará se suas defesas são adequadas. \n O boneco em posição alta significa terras em franca produção, caso contrário você precisará de mais servos. \n Uma boa distribuição de grãos à população, aumentará a taxa de natalidade e incentivará a migração de novos servos. \n Taxas e impostos elevados aumentam a arrecadação mas afetam a economia da nação. \n Faça um governo democrático e lembre-se que é sempre bom comprar na baixa para vender na alta.\n BOA  SORTE !");
-}
-alert ("NÍVEIS DO JOGO: \n 1. Débil mental \n 1. Aprendiz \n 2. Aventureiro \n 3. Mestre \n 4. Grande mestre");
-nivelDoJogo(5)=prompt("Em que nível deseja jogar: ");
-nivelDoJogo(5) = nivelDoJogo(5) + 2 + 2 * nivelDoJogo(5);
-jogadorDaVezç = jogadorDaVezç + 1;
-
-if (jogadorDaVezç>F) {
+if (jogadorDaVezç > F) {
     anoCorrente[5] = anoCorrente[5] + 1;
     jogadorDaVezç = 1;
 }
 
-if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
-    if (posicialSocial[jogadorDaVezç] = -1 ) {
-        jogadorDaVezç = jogadorDaVezç + 1;    
-        
-        THEN 119
-    
-    THEN 117
-114 tempoCondenacao[jogadorDaVezç) = tempoCondenacao[jogadorDaVezç) - 1
-115 IF tempoCondenacao[jogadorDaVezç) = -1 THEN 117
-116 jogadorDaVezç = jogadorDaVezç + 1
-117 IF posicialSocial[jogadorDaVezç) = -1 THEN 119
-118 GOTO 120
-119 
+
+if (variavelNaoDescoberta[jogadorDaVezç] != 1) {
+    if (posicialSocial[jogadorDaVezç] == -1) {
+        jogadorDaVezç = jogadorDaVezç + 1;
+    }
+    else {
+        tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
+    }
+}
+
+if (tempoCondenacao[jogadorDaVezç] == -1) {
+    if (posicialSocial[jogadorDaVezç] == -1) {
+        jogadorDaVezç = jogadorDaVezç + 1;
+    }
+    else {
+        tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
+    }
+}
+
+if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && posicialSocial[4] < 1) THEN 631
+
 120 IF posicialSocial[1) < 1 AND posicialSocial[2) < 1 AND posicialSocial[3) < 1 AND posicialSocial[4) < 1 THEN 631
 121 IF jogadorDaVezç > F THEN 123
 122 GOTO 126
 
 125 GOTO 112
-126 IF anoCorrente[5) >= limitedeVida[jogadorDaVezç)THEN 149
+126 IF anoCorrente[5) >= limitedeVida[jogadorDaVezç) THEN 149
 127 GOSUB 181
 128 GOSUB 245
 129 GOSUB 331
@@ -250,7 +261,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 250 PRINT"      3. Comprar terras": PRINT"      4. Vender terras"
 251 PRINT: PRINT"      Area da na‡±o ==>"; Math.trunc(terra[jogadorDaVezç)); "Hect.": PRINT"      Digite <0> p/continuar"
 252 GOSUB 708
-253 IF Z$ <> "0" AND Z$ <> "1"AND Z$ <> "2"AND Z$ <> "3"AND Z$ <> "4" THEN 248
+253 IF Z$ != "0" AND Z$ != "1"AND Z$ != "2"AND Z$ != "3"AND Z$ != "4" THEN 248
 254 I1 = VAL(Z$)
 255 IF I1 > 4 THEN 248
 256 IF I1 < 1 THEN RETURN
@@ -266,7 +277,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 266 GOSUB 216
 267 GOTO 248
 268 CLS: LOCATE 5, 10: prompt" Quanto gr±o vai vender"; I1
-269 IF I1 <= reserva[jogadorDaVezç)THEN 272
+269 IF I1 <= reserva[jogadorDaVezç) THEN 272
 270 LOCATE 5, 10: PRINT"N±o ha tanto gr±o dispon¡vel ...": GOSUB 826: FORK = 1TO 500: NEXT
 271 GOTO 248
 272 caixa[jogadorDaVezç) = caixa[jogadorDaVezç) + (I1 * G / 1000)
@@ -277,7 +288,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 277 caixa[jogadorDaVezç) = caixa[jogadorDaVezç) - (I1 * L)
 278 GOTO 264
 279 CLS: LOCATE 5, 10: prompt"Quantos hect. vai vender"; I1
-280 IF I1 <= (terra[jogadorDaVezç) - 5000)THEN 283
+280 IF I1 <= (terra[jogadorDaVezç) - 5000) THEN 283
 281 CLS: LOCATE 5, 10: PRINT" Vocˆ n±o pode vender tanto!": GOSUB 826: FORK = 1TO500: NEXT
 282 GOTO 279
 283 terra[jogadorDaVezç) = terra[jogadorDaVezç) - I1
@@ -291,7 +302,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 291      PRINT"        3. Impostos diversos                  4. Taxas judiciarias"
 292 PRINT: PRINT: PRINT"        Digite (0) p/continuar"
 293 GOSUB 708
-294 IF Z$ <> "0" AND Z$ <> "1"AND Z$ <> "2"AND Z$ <> "3"AND Z$ <> "4" THEN 293
+294 IF Z$ != "0" AND Z$ != "1"AND Z$ != "2"AND Z$ != "3"AND Z$ != "4" THEN 293
 295 I = VAL(Z$)
 296 IF I < 1 THEN 320
 297 IF I = 1 THEN 301
@@ -313,7 +324,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 313 GOTO 286
 314 CLS: LOCATE 3, 10: PRINT"JUSTI€A ==>  1. Justa                              2. Moderada                            3. R¡spida                            4. Abusiva"
 315 GOSUB 708
-316 IF Z$ <> "1"AND Z$ <> "2"AND Z$ <> "3"AND Z$ <> "4" THEN 315
+316 IF Z$ != "1"AND Z$ != "2"AND Z$ != "3"AND Z$ != "4" THEN 315
 317 I = VAL(Z$)
 318 formaJustica[jogadorDaVezç) = I
 319 GOTO 286
@@ -329,7 +340,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 329 IF caixa[jogadorDaVezç) < (-10000 * posicialSocial[jogadorDaVezç)) THEN 660
 330 RETURN
 331 CLS: LOCATE 5, 10: prompt" Quanto gr±o fornecera para  a po      pula‡±o da cidade"; graosPopulacaoç
-332 IF graosPopulacaoç >= (reserva[jogadorDaVezç) / 5)THEN 335
+332 IF graosPopulacaoç >= (reserva[jogadorDaVezç) / 5) THEN 335
 333 CLS: LOCATE 5, 10: PRINT"  Vocˆ devera fornecer no m¡nimo        20% da reserva de gr±os": GOSUB 826: FORK = 1TO 500: NEXT
 334 GOTO 331
 335 IF graosPopulacaoç <= (reserva[jogadorDaVezç) - reserva[jogadorDaVezç) / 5) THEN 338
@@ -429,14 +440,14 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 429 RETURN
 430 CLS: L2 = terra[jogadorDaVezç) / 1000
 431 LOCATE 14, 2: PRINT Cidade[jogadorDaVezç)
-432 LOCATE 25, 2: PRINT terra[jogadorDaVezç); "hect."
+    432 LOCATE 25, 2: PRINT terra[jogadorDaVezç); "hect."
 433 IF(soldados[jogadorDaVezç) - 5) < (terra[jogadorDaVezç) / 1000) THEN 444
 434 LOCATE 1, 6: PRINT" ÛÛÛÛÛÛÛ"
 435 LOCATE 1, 7: PRINT"  ÛËËËÛ"
 436 LOCATE 1, 8: PRINT"  ÛËËËÛ"
 437 LOCATE 1, 9: PRINT"  ÛËËËÛ"
 438 LOCATE 1, 10: PRINT" ÛÛÛUÛÛÛ"
-439 IF(soldados[jogadorDaVezç) / 2) < (terra[jogadorDaVezç) / 1000)THEN 447
+439 IF(soldados[jogadorDaVezç) / 2) < (terra[jogadorDaVezç) / 1000) THEN 447
 440 LOCATE 1, 4: PRINT" Â Â Â Â"
 441 LOCATE 1, 5: PRINT" ÛÛÛÛÛÛÛ"
 442 LOCATE 1, 6: PRINT"  ÛÛÛÛÛ "
@@ -445,7 +456,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 445 LOCATE 1, 9: PRINT" ÛÛÛÛÛÛÛ"
 446 LOCATE 1, 10: PRINT" ÛÛÛUÛÛÛ"
 447 Z = catedrais[jogadorDaVezç)
-448 IF Z = 0 THEN 464
+    448 IF Z = 0 THEN 464
 449 IF Z > 7 THEN Z = 7
 450 IF Z = 1 THEN 463
 451 IF Z = 2 THEN 462
@@ -462,7 +473,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 462 LOCATE 26, 19: PRINT"Ý×××Ê"
 463 LOCATE 26, 20: PRINT"ÛÛÀÛÛ"
 464 Z = palacios[jogadorDaVezç)
-465 IF Z = 0 THEN 480
+    465 IF Z = 0 THEN 480
 466 IF Z = 1 THEN 479
 467 IF Z = 2 THEN 478
 468 IF Z = 3 THEN 477
@@ -483,14 +494,14 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 483 LOCATE XX, YY - 1: PRINT" O "
 484 LOCATE XX, YY - 2: PRINT" Î "
 485 Z = mercados[jogadorDaVezç)
-486 IF Z = 0 THEN 492
+    486 IF Z = 0 THEN 492
 487 LOCATE 8, 17: PRINT"ÎÎMÎÎ"
 488 LOCATE 8, 18: PRINT"ÛßßßÛ"
 489 LOCATE 8, 19: PRINT"ÝÌÌÌÊ"
 490 LOCATE 8, 20: PRINT"ÛÛ×ÛÛ"
 491 LOCATE  9, 19: PRINT Z
 492 Z = moinhos[jogadorDaVezç)
-493 IF Z = 0 THEN 501
+    493 IF Z = 0 THEN 501
 494 LOCATE 14, 15: PRINT"ÎÎÎÎÎ"
 495 LOCATE 14, 16: PRINT"ÛÛÛÛÛ"
 496 LOCATE 14, 17: PRINT"Ý\\\Ê"
@@ -499,7 +510,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 499 LOCATE 14, 20: PRINT"ÛÛUÛÛ"
 500 LOCATE 15, 18: PRINT Z
 501 LOCATE 1, 3: PRINT"ANO"; anoCorrente[5)
-502 LOCATE 3, 24: PRINT "  Qualquer tecla p/continuar "
+    502 LOCATE 3, 24: PRINT "  Qualquer tecla p/continuar "
 503 GOSUB 708
 504 RETURN
 505 Z = Math.trunc((mercados[jogadorDaVezç) + palacios[jogadorDaVezç) + catedrais[jogadorDaVezç) + moinhos[jogadorDaVezç) + caixa[jogadorDaVezç) / 1000 + terra[jogadorDaVezç) / 1000 + reserva[jogadorDaVezç) / 10000 + servos[jogadorDaVezç) / 1000 / 2))
@@ -508,7 +519,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 508 XX = 35: YY = Math.trunc((54 - Z) / 2): RETURN
 509 CLS
 510 LOCATE 0, 0: PRINT Titulo[posicialSocial[jogadorDaVezç) + sexo0H8[jogadorDaVezç)); nomeComCidade[jogadorDaVezç)
-511      PRINT: PRINT"INVESTIMENTOS DO ESTADO:"
+    511      PRINT: PRINT"INVESTIMENTOS DO ESTADO:"
 512 PRINT"ßßßßßßßßßßßßßßßßßßßßßßß": PRINT"1. mercadosç  (1000 florins,cada)"
 513 PRINT"2. moinhosç    (2000 florins,cada)"
 514 PRINT"3. palaciosç  (parte - 3000 florins)"
@@ -519,7 +530,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 519 PRINT: PRINT"(Que Investimento fara?)": PRINT: PRINT: PRINT"Press. <6> p/comparar                        <7> p/mapear"
 520 PRINT"      <0> p/continuar"
 521 GOSUB 708
-522 IF Z$ <> "0" AND Z$ <> "1" AND Z$ <> "2"AND Z$ <> "3"AND Z$ <> "4"AND Z$ <> "5"AND Z$ <> "6"AND Z$ <> "7" THEN 521
+522 IF Z$ != "0" AND Z$ != "1" AND Z$ != "2"AND Z$ != "3"AND Z$ != "4"AND Z$ != "5"AND Z$ != "6"AND Z$ != "7" THEN 521
 523 I = VAL(Z$)
 524 IF I >= 1 THEN 527
 525 CLS
@@ -552,13 +563,13 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 552 caixa[jogadorDaVezç) = caixa[jogadorDaVezç) - I * 3000
 553 IF caixa[jogadorDaVezç) <= -30000 THEN 660
 554 nobres[jogadorDaVezç) = Math.trunc(nobres[jogadorDaVezç) + aleatorio[) * I * 2)
-555 naoDescobriAinda[jogadorDaVezç) = naoDescobriAinda[jogadorDaVezç) + I * .5
+    555 naoDescobriAinda[jogadorDaVezç) = naoDescobriAinda[jogadorDaVezç) + I * .5
 556 GOTO 509
 557 CLS: LOCATE 2, 10: prompt"Quantas catedraisç deseja comprar "; I
 558 caixa[jogadorDaVezç) = caixa[jogadorDaVezç) - I * 5000
 559 IF caixa[jogadorDaVezç) <= -30000 THEN 660
 560 bispos[jogadorDaVezç) = Math.trunc(bispos[jogadorDaVezç) + aleatorio[) * 6 * I)
-561 catedrais[jogadorDaVezç) = catedrais[jogadorDaVezç) + I
+    561 catedrais[jogadorDaVezç) = catedrais[jogadorDaVezç) + I
 562 naoDescobriAinda[jogadorDaVezç) = naoDescobriAinda[jogadorDaVezç) + I
 563 GOTO 509
 564 soldados[jogadorDaVezç) = soldados[jogadorDaVezç) + 20
@@ -579,13 +590,13 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 579 GOTO 577
 580 Z = 0
 581 A = mercados[jogadorDaVezç)
-582 GOSUB 627
+    582 GOSUB 627
 583 A = palacios[jogadorDaVezç)
-584 GOSUB 627
+    584 GOSUB 627
 585 A = catedrais[jogadorDaVezç)
-586 GOSUB 627
+    586 GOSUB 627
 587 A = moinhos[jogadorDaVezç)
-588 GOSUB 627
+    588 GOSUB 627
 589 A = caixa[jogadorDaVezç) / 5000
 590 GOSUB 627
 591 A = (terra[jogadorDaVezç) - 5000) / 4000
@@ -603,8 +614,8 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 603 A = naoDescobriAinda[jogadorDaVezç) / 5
 604 GOSUB 627
 605 A = Math.trunc(Z / nivelDoJogo(5) - formaJustica[jogadorDaVezç) + 1)
-606 IF A > 8 THEN A = 8
-607 IF(anoCorrente[5) + 2) <> limitedeVida[jogadorDaVezç) THEN 610
+    606 IF A > 8 THEN A = 8
+607 IF(anoCorrente[5) + 2) != limitedeVida[jogadorDaVezç) THEN 610
 608 posicialSocial[jogadorDaVezç) = posicialSocial[jogadorDaVezç) + 1
 609 GOTO 612
 610 IF posicialSocial[jogadorDaVezç) >= A GOTO 626
@@ -613,9 +624,9 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 613 CLS
 614 LOCATE 5, 10: PRINT"NNËËË  CONGRATULA€™ES ËËËNN"
 615 PRINT: PRINT: PRINT nomeComCidade[jogadorDaVezç)
-616 PRINT: PRINT  "Vocˆ agora ‚ "; Titulo[posicialSocial[jogadorDaVezç) + sexo0H8[jogadorDaVezç))
-617 nomeComCidade[jogadorDaVezç) = nome[jogadorDaVezç) + " de " + Cidade[jogadorDaVezç)
-618 PLAY"CDEFGABR2", "L8CDEFGABR2": PLAY"T240L6V12", "T240L2V9": PLAY"R8O6GABO7DCCEB", "O4GO5GE"
+    616 PRINT: PRINT  "Vocˆ agora ‚ "; Titulo[posicialSocial[jogadorDaVezç) + sexo0H8[jogadorDaVezç))
+    617 nomeComCidade[jogadorDaVezç) = nome[jogadorDaVezç) + " de " + Cidade[jogadorDaVezç)
+    618 PLAY"CDEFGABR2", "L8CDEFGABR2": PLAY"T240L6V12", "T240L2V9": PLAY"R8O6GABO7DCCEB", "O4GO5GE"
 619 PLAY"DG#GDO6BGAB", "O4BO5EO4E"
 620 PLAY"O7CDEDCO6BABG", "O4ABO5C"
 621 PLAY"F#GADF#AO7CO6BC", "O5DF#D"
@@ -628,20 +639,26 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 628 Z = Z + A
 629 RETURN
 630 CLS
-631 LOCATE 10, 10: PRINT"ÌÌÌ GAME OVER ËËË"
-632 FOR K = 1 TO 1000: NEXT
-633 CLS: LOCATE  7, 10: PRINT  Titulo[posicialSocial[jogadorDaVezç) + sexo0H8[jogadorDaVezç)); nomeComCidade[jogadorDaVezç)
-634 PRINT: PRINT: PRINT "      ÁÁÁÁÁÁ    VENCEU    ÁÁÁÁÁÁÁ"
-635 GOSUB 795
-636 GOSUB 430
-637 GOSUB 136
-638 GOTO 725
+
+
+function gameOver() {
+        631 LOCATE 10, 10: PRINT"ÌÌÌ GAME OVER ËËË"
+        632 FOR K = 1 TO 1000: NEXT
+        633 CLS: LOCATE  7, 10: PRINT  Titulo[posicialSocial[jogadorDaVezç) + sexo0H8[jogadorDaVezç)); nomeComCidade[jogadorDaVezç)
+        634 PRINT: PRINT: PRINT "      ÁÁÁÁÁÁ    VENCEU    ÁÁÁÁÁÁÁ"
+        635 GOSUB 795 //<-- Só musiquinha
+        636 GOSUB 430
+        637 GOSUB 136
+        638 GOTO 725
+    }
+
+
 639 PEST = Math.trunc(aleatorio[2) * 100)
-640 IF PEST = Math.trunc((aleatorio[) * 1000) / 10)THEN 642
+    640 IF PEST = Math.trunc((aleatorio[) * 1000) / 10) THEN 642
 641 RETURN
 642 CLS
 643 PP = Math.trunc(aleatorio[) * 70)
-644 NN = Math.trunc(nobres[jogadorDaVezç) * PP / 100) + 1
+    644 NN = Math.trunc(nobres[jogadorDaVezç) * PP / 100) + 1
 645 nobres[jogadorDaVezç) = nobres[jogadorDaVezç) - NN
 646 CC = Math.trunc(bispos[jogadorDaVezç) * PP / 100) + 2
 647 bispos[jogadorDaVezç) = bispos[jogadorDaVezç) - CC
@@ -665,11 +682,11 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 665 GOSUB 775
 666 CLS
 667 mercados[jogadorDaVezç) = Math.trunc(mercados[jogadorDaVezç) * (Math.trunc(aleatorio[) * 10) / 10))
-668 palacios[jogadorDaVezç) = Math.trunc(palacios[jogadorDaVezç) * (Math.trunc(aleatorio[) * 10) / 10))
-669 catedrais[jogadorDaVezç) = Math.trunc(catedrais[jogadorDaVezç) * (Math.trunc(aleatorio[) * 10) / 10))
-670 moinhos[jogadorDaVezç) = Math.trunc(moinhos[jogadorDaVezç) * (Math.trunc(aleatorio[) * 10) / 10))
-671 terra[jogadorDaVezç) = Math.trunc(terra[jogadorDaVezç) * (Math.trunc(aleatorio[) * 10) / 10))
-672 naoDescobriAinda[jogadorDaVezç) = 1
+    668 palacios[jogadorDaVezç) = Math.trunc(palacios[jogadorDaVezç) * (Math.trunc(aleatorio[) * 10) / 10))
+    669 catedrais[jogadorDaVezç) = Math.trunc(catedrais[jogadorDaVezç) * (Math.trunc(aleatorio[) * 10) / 10))
+    670 moinhos[jogadorDaVezç) = Math.trunc(moinhos[jogadorDaVezç) * (Math.trunc(aleatorio[) * 10) / 10))
+    671 terra[jogadorDaVezç) = Math.trunc(terra[jogadorDaVezç) * (Math.trunc(aleatorio[) * 10) / 10))
+    672 naoDescobriAinda[jogadorDaVezç) = 1
 673 caixa[jogadorDaVezç) = 100
 674 comerciantes[jogadorDaVezç) = Math.trunc(comerciantes[jogadorDaVezç) * Math.trunc(aleatorio[) * 7) / 10)
 675 reserva[jogadorDaVezç) = reserva[jogadorDaVezç) - 5000
@@ -685,7 +702,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 685 IF Z = 5 THEN Cidade[5) = "BAR°O "
 686 nomeComCidade[5) = "MALONE DE VINCENZA"
 687 A1 = Math.trunc(aleatorio[) * 9000 + 1000)
-688 GOTO  690
+        688 GOTO  690
 689 A1 = soldados[Z) * 1000 - terra[Z) / 3
 690 IF A1 > (terra[jogadorDaVezç) - 5000) THEN A1 = (terra[jogadorDaVezç) - 5000) / 2
 691 PRINT: PRINT"    Digite <0> p/continuar "
@@ -699,7 +716,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 699 terra[Z) = terra[Z) + A1
 700 terra[jogadorDaVezç) = terra[jogadorDaVezç) - A1
 701 Z = Math.trunc(aleatorio[) * 40)
-702 IF Z > (soldados[jogadorDaVezç) - 15) THEN Z = soldados[jogadorDaVezç) - 15
+        702 IF Z > (soldados[jogadorDaVezç) - 15) THEN Z = soldados[jogadorDaVezç) - 15
 703 LOCATE 5, 13: PRINT Titulo[posicialSocial[jogadorDaVezç) + sexo0H8[jogadorDaVezç)); ""; nomeComCidade[jogadorDaVezç); " perdeu"; Z; " soldados em batalha"
 704 soldados[jogadorDaVezç) = soldados[jogadorDaVezç) - Z
 705 PRINT: PRINT "Aperte <RETURN>"
@@ -714,8 +731,8 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 725 CLS: LOCATE 10, 10: PRINT" ÌÌÌ GAME OVER ÌÌÌ"
 726 GOSUB 829
 727 LOCATE 2, 10: prompt"Quer jogar novamente (S/N)"; F$
-728 IF F$ = "S" OR F$ = "s" THEN 832
-729 IF F$ = "N" OR F$ = "n" THEN GOTO  765
+728 if (F$ = "S" || F$ = "s") THEN 832
+729 if (F$ = "N" || F$ = "n") { desligarJogo() };
 730 CLS: LOCATE 2, 10: PRINT"Os Bancos confiscaram seus bens..." : GOSUB 775: FORK = 1TO3000: NEXT
 731 IF caixa[jogadorDaVezç) <= -20000 AND caixa[jogadorDaVezç) > -35000! THEN 734
 732 IF caixa[jogadorDaVezç) <= -35000! AND caixa[jogadorDaVezç) > -50000! THEN 736
@@ -749,10 +766,12 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 760 reserva[jogadorDaVezç) = 5000
 761 GOTO 677
 
-765 CLS: BEEP: LOCATE 10, 10: PRINT"    F I M "
-766 GOSUB 775: FOR K = 1 TO 1000: NEXT
-767 CLS: END
 
+function desligarJogo{
+    765 CLS: BEEP: LOCATE 10, 10: PRINT"    F I M "
+    766 GOSUB 775: FOR K = 1 TO 1000: NEXT
+    767 CLS: END
+}
 // ************************************************************************************************** { ROTINA MÚSICA DE ABERTURA
 768 PLAY"O2L16BO3BBBO4CO3BABBF#B", "O3L8O2BO3BO4CO3ABF#"
 769 PLAY"O2L16BO3BBBO4CO3BABBF#B", "O3L8O2BO3BO4CO3ABF#"
@@ -822,7 +841,7 @@ if (variavelNaoDescoberta[jogadorDaVezç] <> 1) {
 831 RETURN
 832 SOUND 7, 56: SOUND 8, 15: SOUND 1, 0
 833 FOR L = 230 TO 100 STEP - .5: SOUND 0, L: NEXT L: SOUND 0, 0: FOR I = 1 TO 150: NEXT I
-834 GOTO 63
+inicioJogo(); //  834 GOTO 63
 
 function aleatorio[) {
     return Math.random();
