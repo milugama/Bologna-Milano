@@ -3,42 +3,41 @@
 // 1 KEY OFF:SCREEN0:BLOAD"BOLOGNA.BIN",S: 2 COLOR 6,5:WIDTH 39: 3 LOCATE12,10
 alert("BOLOGNA & MILANO");
 musicaAbertura();
-// 6 COLOR15,4
 alert("Bologna & Milano ‚ um jogo espetacular!");
 musicaAbertura();
 apagaTela();
 alert("Que vai testar sua capacidade p/administrar uma cidade, um estado ou uma nação.");
 musicaAbertura();
-mercados[4]; // mercados
-palacios[4]; // palaciosç
-catedrais[4];
-moinhos[4];
-taxaAlfandegaria[4];
-taxaVendas[4];
-impostos[4];
-formaJustica[4];
-caixa[4];
-terra[5];
-comerciantes[4];
-nobres[4];
-limitedeVida[4];
-soldados[5];
-bispos[4];
-reserva[4];
-servos[4];
-posicialSocial[5];
-naoDescobriAinda[5];
-sexo0H8[5];
-anoCorrente[5];
-tempoCondenacao[4];
-variavelNaoDescoberta[4];
-Titulo[16];
-nome[4];
-nomeComCidade[5];
-Cidade[5];
-jogadorDaVezç = 0; //antiga variável E
-graosPopulacaoç = 0;
-O = 0; // não encontrei uso para ela.
+var mercados = Array(4); // mercados
+var palacios = Array(4); // palaciosç
+var catedrais = Array(4);
+var moinhos = Array(4);
+var taxaAlfandegaria = Array(4);
+var taxaVendas = Array(4);
+var impostos = Array(4);
+var formaJustica = Array(4);
+var caixa = Array(4);
+var terra = Array(4);
+var comerciantes = Array(4);
+var nobres = Array(4);
+var limitedeVida = Array(4);
+var soldados = Array(4);
+var bispos = Array(4);
+var reserva = Array(4);
+var servos = Array(4);
+var posicialSocial = Array(5);
+var naoDescobriAinda = Array(5);
+var sexo0H8 = Array(5);
+var anoCorrente = Array(5);
+var tempoCondenacao = Array(4);
+var variavelNaoDescoberta = Array(4);
+var Titulo = Array(16);
+var nome = Array(4);
+var nomeComCidade = Array(5);
+var Cidade = Array(5);
+var jogadorDaVezç = 0; //antiga variável E
+var graosPopulacaoç = 0;
+var O = 0; // não encontrei uso para ela.
 anoCorrente[5] = 1400;
 Cidade[1] = "GÊNOVA";
 Cidade[2] = "MILANO";
@@ -61,9 +60,11 @@ Titulo[14] = "GRÃO-DUQUESA ";
 Titulo[15] = "PRINCESA ";
 Titulo[16] = "* RAINHA * ";
 //63 CLS
-function inicioJogo() {
-
-    F = prompt("Quantas pessoas (2 a 4) vão participar");
+function inicioJogo() { //********************************** TRANSFERIDA
+    F=0
+    while (F < 2 || F > 4) {
+        F = prompt("Quantas pessoas (2 a 4) vão participar");
+    }
     //F = VAL(F$);
     //66 CLS: BEEP
     //67 LOCATE  5, 10: PRINT"Ir±o participar"; F; "pessoas,OK?"
@@ -98,8 +99,8 @@ function inicioJogo() {
         alert("INSTRUÇÕES \n A partir de agora  você será o governante de uma cidade-estado do século  XV.\n A cada período de bom governo você receberá títulos cada vez maiores. \n A expectativa de vida naquela época era muito curta, logo você disporá de pouco tempo para governar. \n Quem primeiro chegar a REI ou RAINHA será o vencedor do jogo. \n O tamanho da torre no canto superior esquerdo indicará se suas defesas são adequadas. \n O boneco em posição alta significa terras em franca produção, caso contrário você precisará de mais servos. \n Uma boa distribuição de grãos à população, aumentará a taxa de natalidade e incentivará a migração de novos servos. \n Taxas e impostos elevados aumentam a arrecadação mas afetam a economia da nação. \n Faça um governo democrático e lembre-se que é sempre bom comprar na baixa para vender na alta.\n BOA  SORTE !");
     }
     alert("NÍVEIS DO JOGO: \n 1. Débil mental \n 1. Aprendiz \n 2. Aventureiro \n 3. Mestre \n 4. Grande mestre");
-    nivelDoJogo(5) = prompt("Em que nível deseja jogar: ");
-    nivelDoJogo(5) = nivelDoJogo(5) + 2 + 2 * nivelDoJogo(5);
+    nivelDoJogo = prompt("Em que nível deseja jogar: ");
+    nivelDoJogo = nivelDoJogo + 2 + 2 * nivelDoJogo;
     jogadorDaVezç = jogadorDaVezç + 1;
 }
 
@@ -127,15 +128,15 @@ if (tempoCondenacao[jogadorDaVezç] == -1) {
     }
 }
 
-if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && posicialSocial[4] < 1) THEN 631
+if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && posicialSocial[4] < 1) { gameOver() }
 
-120 IF posicialSocial[1) < 1 AND posicialSocial[2) < 1 AND posicialSocial[3) < 1 AND posicialSocial[4) < 1 THEN 631
+
 121 IF jogadorDaVezç > F THEN 123
 122 GOTO 126
 
 125 GOTO 112
 126 IF anoCorrente[5) >= limitedeVida[jogadorDaVezç) THEN 149
-127 GOSUB 181
+127 GOSUB 181 // colheita
 128 GOSUB 245
 129 GOSUB 331
 130 GOSUB 286
@@ -189,38 +190,50 @@ if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && p
 178 PRINT: PRINT Z2; "servos morreram este ano"
 179 servos[jogadorDaVezç) = servos[jogadorDaVezç) - Z2
 180 RETURN
-181 W = Math.trunc((Math.trunc(aleatorio[) * 5) + Math.trunc(aleatorio[2) * 6)) / 2) + 1
-182 IF W = 1 THEN 187
-183 IF W = 2 THEN 189
-184 IF W = 3 THEN 191
-185 IF W = 4 THEN 193
-186 IF W = 5 THEN 195: IF W > 5 THEN 181
-187 W$ = "Estiagem - AMEA€A DE FOME !"
-188 GOTO 196
-189 W$ = "Tempo ruim - COLHEITA POBRE"
-190 GOTO 196
-191 W$ = "Tempo normal - COLHEITA RAZOAVEL"
-192 GOTO 196
-193 W$ = "Tempo bom - COLHEITA BOA"
-194 GOTO  196
-195 W$ = "Tempo ¢timo - COLHEITA EXCELENTE"
-196 R = Math.trunc(aleatorio[) * 50)
-197 IF R = 0 THEN R = 1
-198 reserva[jogadorDaVezç) = (reserva[jogadorDaVezç) * 100 - reserva[jogadorDaVezç) * R) / 100
-199 X = Math.trunc(servos[jogadorDaVezç) - moinhos[jogadorDaVezç) * 100)
-200 IF X < 0 THEN X = 1
-201 Y = W - .5
-202 DD = W * (servos[jogadorDaVezç) - X)
-203 IF DD = 0 THEN DD = 1
-204 H1 = Math.trunc(Y * terra[jogadorDaVezç) / 1.5 + Y * X + (aleatorio[) * servos[jogadorDaVezç)) - DD)
-205 reserva[jogadorDaVezç) = Math.trunc(reserva[jogadorDaVezç) + H1)
-206 D1 = nobres[jogadorDaVezç) * 100 + catedrais[jogadorDaVezç) * 40 + comerciantes[jogadorDaVezç) * 30 + soldados[jogadorDaVezç) * 10 + servos[jogadorDaVezç) * 5
-207 L = Math.trunc((100 * W + Math.trunc(aleatorio[) * 9) + Math.trunc(aleatorio[) * 9)) / 10)
-208 L = (anoCorrente[5) - 1400 + L) / 10
-209 Z = 6 - W
-210 G = (Math.trunc(aleatorio[) * 5) + Math.trunc(aleatorio[) * 5) + Z * 10) / (5 + 2 * Y) * 30
-211 G = Math.trunc(G)
-212 RETURN
+
+//Colheita - 181
+function colheita() {
+    W = 0;
+    while (W < 1 || W > 5) {
+        W = Math.trunc((Math.trunc(aleatorio() * 5) + Math.trunc(aleatorio() * 6)) / 2) + 1;
+    }
+
+    switch (W) {
+        case 1:
+            alert("Estiagem - Ameaça de fome!!");
+            break;
+        case 2:
+            alert("Tempo ruim - Colheita pobre.");
+            break;
+        case 3:
+            alert("Tempo normal - Colheita razoável.");
+            break;
+        case 4:
+            alert("Tempo bom - Colheita boa.");
+            break;
+        case 5:
+            alert("Tempo ótimo - Colheita excelente!!");
+            break;
+    }
+
+    R = Math.trunc(aleatorio() * 50);
+    if (R == 0) { R = 1; }
+    reserva[jogadorDaVezç] = (reserva[jogadorDaVezç] * 100 - reserva[jogadorDaVezç] * R) / 100;
+    X = Math.trunc(servos[jogadorDaVezç] - moinhos[jogadorDaVezç] * 100);
+    if (x < 0) { x = 1; }
+    Y = W - .5
+    DD = W * (servos[jogadorDaVezç] - X);
+    if (DD == 0) { DD = 1; }
+    H1 = Math.trunc(Y * terra[jogadorDaVezç] / 1.5 + Y * X + (aleatorio() * servos[jogadorDaVezç]) - DD);
+    reserva[jogadorDaVezç] = Math.trunc(reserva[jogadorDaVezç] + H1);
+    D1 = nobres[jogadorDaVezç] * 100 + catedrais[jogadorDaVezç] * 40 + comerciantes[jogadorDaVezç] * 30 + soldados[jogadorDaVezç] * 10 + servos[jogadorDaVezç] * 5;
+    L = Math.trunc((100 * W + Math.trunc(aleatorio() * 9) + Math.trunc(aleatorio() * 9)) / 10);
+    L = (anoCorrente[5] - 1400 + L) / 10;
+    Z = 6 - W;
+    G = Math.trunc((Math.trunc(aleatorio() * 5) + Math.trunc(aleatorio() * 5) + Z * 10) / (5 + 2 * Y) * 30);
+}
+
+//RATOS E FORMA DE JUSTIÇA NA RESERVA DE GRÃOS - 213
 213 PRINT: PRINT  "Os ratos comeram"; R; " % da reserva  de      gr±os dos silos de armazenagem"
 214 PRINT: PRINT W$
 215 PRINT"Produ‡±o de gr±os"; H1; "sacas"
@@ -253,6 +266,8 @@ if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && p
 242 PRINT: PRINT TAB(1); C1; TAB(10); S1; TAB(21); I1; TAB(32); J
 243      PRINT "florins  florins    florins    florins"
 244 RETURN
+
+//OPÇÕES ECONÔMICAS - 245
 245 CLS
 246 LOCATE 0, 1: PRINT Titulo[sexo0H8[jogadorDaVezç) + posicialSocial[jogadorDaVezç)); nomeComCidade[jogadorDaVezç)
 247 GOSUB 213
@@ -613,7 +628,7 @@ if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && p
 602 GOSUB 627
 603 A = naoDescobriAinda[jogadorDaVezç) / 5
 604 GOSUB 627
-605 A = Math.trunc(Z / nivelDoJogo(5) - formaJustica[jogadorDaVezç) + 1)
+605 A = Math.trunc(Z / nivelDoJogo - formaJustica[jogadorDaVezç) + 1)
     606 IF A > 8 THEN A = 8
 607 IF(anoCorrente[5) + 2) != limitedeVida[jogadorDaVezç) THEN 610
 608 posicialSocial[jogadorDaVezç) = posicialSocial[jogadorDaVezç) + 1
@@ -843,6 +858,6 @@ function desligarJogo{
 833 FOR L = 230 TO 100 STEP - .5: SOUND 0, L: NEXT L: SOUND 0, 0: FOR I = 1 TO 150: NEXT I
 inicioJogo(); //  834 GOTO 63
 
-function aleatorio[) {
+function aleatorio[) { //********************************** TRANSFERIDA
     return Math.random();
 }
