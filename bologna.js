@@ -25,7 +25,7 @@ var soldados = Array(4);
 var bispos = Array(4);
 var reserva = Array(4);
 var servos = Array(4);
-var posicialSocial = Array(5);
+var posicialSocial = Array(5);  //se -1 jogador morto
 var naoDescobriAinda = Array(5);
 var sexo0H8 = Array(5);
 var anoCorrente = Array(5);
@@ -61,7 +61,7 @@ Titulo[15] = "PRINCESA ";
 Titulo[16] = "* RAINHA * ";
 //63 CLS
 function inicioJogo() { //********************************** TRANSFERIDA
-    F=0
+    F = 0
     while (F < 2 || F > 4) {
         F = prompt("Quantas pessoas (2 a 4) vão participar");
     }
@@ -108,7 +108,12 @@ if (jogadorDaVezç > F) {
     anoCorrente[5] = anoCorrente[5] + 1;
     jogadorDaVezç = 1;
 }
+else {
+    if (anoCorrente[5] >= limitedeVida[jogadorDaVezç]) {
+        noticiasDesagradaveis();
+    }
 
+}
 
 if (variavelNaoDescoberta[jogadorDaVezç] != 1) {
     if (posicialSocial[jogadorDaVezç] == -1) {
@@ -131,7 +136,6 @@ if (tempoCondenacao[jogadorDaVezç] == -1) {
 if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && posicialSocial[4] < 1) { gameOver() }
 
 
-121 IF jogadorDaVezç > F THEN 123
 122 GOTO 126
 
 125 GOTO 112
@@ -145,6 +149,7 @@ if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && p
 133 GOSUB 509
 134 GOSUB 580
 135 GOTO 111
+
 136 CLS
 137 PRINT: PRINT"NOB  SOL  CLE  COM  SERV  TERRA  CAIXA"
 138 PRINT"======================================"
@@ -158,18 +163,48 @@ if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && p
 146 IF Z$ = "C" THEN GOSUB 568
 147 IF Z$ = "0" THEN RETURN
 148 GOTO 145
-149 CLS: LOCATE3, 6: PRINT"ËËË NOTICIAS DESAGRADAVEIS ËËË"
-150 GOSUB 775
-151 LOCATE 5, 10: PRINT nomeComCidade[jogadorDaVezç)
-152 PRINT"Acaba de falecer": FORK = 1TO1000: NEXT
-153 posicialSocial[jogadorDaVezç) = -1
-154 Y = Math.trunc(aleatorio[2) * 8)
-155 IF anoCorrente[5) <= 1430 THEN 158
+
+
+function noticiasDesagradaveis() {
+    alert("### NOTÍCIAS DESAGRADÁVEIS ### \n" + nomeComCidade[jogadorDaVezç] + " acaba de falecer.");
+    posicialSocial[jogadorDaVezç] = -1;
+    Y = Math.trunc(aleatorio() * 8);
+    if (anoCorrente[5] <= 1430) {
+        switch (Y) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                alert("Devido a atentado terrorista do grupo pr¢ Napoleão.");
+                break;
+            case 4:
+                alert("Devido a febre tifóide.");
+                break;
+            case 5:
+                alert("Devido a pesta negra.");
+                break;
+            case 6:
+                alert("Devido a ataque de barbaros durante uma viagem.");
+                break;
+
+            case 7:
+            case 8:
+                alert("Devido a envenenamento alimentar");
+                break;
+        }
+    }
+    else {
+        alert("Devido à velhice após longo governo.");
+    }
+}
+
+
+
 156 PRINT: PRINT"Devido a velhice ap¢s longo governo"
 157 GOTO 163
-158 IF Y < 4 THEN PRINT: PRINT"Devido a atentado terrorista do grupo pr¢ Napole„o"
+
 159 IF Y = 5 THEN PRINT: PRINT"Devido a peste negra"
-160 IF Y = 4 THEN PRINT: PRINT"Devido a febre tifoide"
+160
 161 IF Y = 6 THEN PRINT: PRINT"Devido a ataque de barbaros durante umaviagem"
 162 IF Y > 6 THEN PRINT: PRINT"Devido a envenenamento alimentar"
 163 PRINT: PRINT "APERTE RETURN": FORK = 1TO1000: NEXT

@@ -57,9 +57,11 @@ Titulo[13] = "DUQUESA ";
 Titulo[14] = "GRÃO-DUQUESA ";
 Titulo[15] = "PRINCESA ";
 Titulo[16] = "* RAINHA * ";
+var jogadorDaVezç=0;
 
-var jogadorDaVezç=1;
 inicioJogo();
+verificacoes();
+
 
 
 
@@ -97,11 +99,39 @@ function inicioJogo() {
     }
     alert("NÍVEIS DO JOGO: \n 1. Aprendiz \n 2. Aventureiro \n 3. Mestre \n 4. Grande mestre");
     nivelDoJogo = prompt("Em que nível deseja jogar: ");
-    nivelDoJogo = nivelDoJogo + 2 + 2 * nivelDoJogo;
+    nivelDoJogo = 2 + 3 * nivelDoJogo;
     jogadorDaVezç = jogadorDaVezç + 1;
 }
 
+function verificacoes(){
+    
+if (jogadorDaVezç > F) {
+    anoCorrente[5] = anoCorrente[5] + 1;
+    jogadorDaVezç = 1;
+}
 
+
+if (variavelNaoDescoberta[jogadorDaVezç] != 1) {
+    if (posicialSocial[jogadorDaVezç] == -1) {
+        jogadorDaVezç = jogadorDaVezç + 1;
+    }
+    else {
+        tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
+    }
+}
+
+if (tempoCondenacao[jogadorDaVezç] == -1) {
+    if (posicialSocial[jogadorDaVezç] == -1) {
+        jogadorDaVezç = jogadorDaVezç + 1;
+    }
+    else {
+        tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
+    }
+}
+
+if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && posicialSocial[4] < 1) { gameOver() }
+
+}
 
 
 
