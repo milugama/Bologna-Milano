@@ -32,7 +32,7 @@ var Titulo = Array(16);
 var nome = Array(4);
 var nomeComCidade = Array(5);
 var Cidade = Array(5);
-var nivelDoJogo=0;
+var nivelDoJogo = 0;
 var jogadorDaVezç = 0; //antiga variável E
 var graosPopulacaoç = 0;
 var O = 0; // não encontrei uso para ela.
@@ -57,7 +57,7 @@ Titulo[13] = "DUQUESA ";
 Titulo[14] = "GRÃO-DUQUESA ";
 Titulo[15] = "PRINCESA ";
 Titulo[16] = "* RAINHA * ";
-var jogadorDaVezç=0;
+var jogadorDaVezç = 0;
 
 inicioJogo();
 verificacoes();
@@ -65,7 +65,7 @@ verificacoes();
 
 
 
-function inicioJogo() { 
+function inicioJogo() {
     F = 0
     while (F < 2 || F > 4) {
         F = prompt("Quantas pessoas (2 a 4) vão participar");
@@ -103,66 +103,106 @@ function inicioJogo() {
     jogadorDaVezç = jogadorDaVezç + 1;
 }
 
-function verificacoes(){
+function verificacoes() {
+
+    if (jogadorDaVezç > F) {
+        anoCorrente[5] = anoCorrente[5] + 1;
+        jogadorDaVezç = 1;
+    }
+    else {
+        if (anoCorrente[5] >= limitedeVida[jogadorDaVezç]) {
+            noticiasDesagradaveis();
+        }
     
-if (jogadorDaVezç > F) {
-    anoCorrente[5] = anoCorrente[5] + 1;
-    jogadorDaVezç = 1;
+    }
+
+    if (variavelNaoDescoberta[jogadorDaVezç] != 1) {
+        if (posicialSocial[jogadorDaVezç] == -1) {
+            jogadorDaVezç = jogadorDaVezç + 1;
+        }
+        else {
+            tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
+        }
+    }
+
+    if (tempoCondenacao[jogadorDaVezç] == -1) {
+        if (posicialSocial[jogadorDaVezç] == -1) {
+            jogadorDaVezç = jogadorDaVezç + 1;
+        }
+        else {
+            tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
+        }
+    }
+
+    if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && posicialSocial[4] < 1) { gameOver() }
+
 }
 
 
-if (variavelNaoDescoberta[jogadorDaVezç] != 1) {
-    if (posicialSocial[jogadorDaVezç] == -1) {
-        jogadorDaVezç = jogadorDaVezç + 1;
+
+//********************************************************************/
+function mostraConvencoes() { //TRANSFERIDO
+    alert("CONVENÇÕES: \n NOB............Nobres\n SOL............Soldados \n CLE............Clero\nCOM............Comerciantes\nSER............Servos\nCAIXA..........Dinheiro");
+    Z$ = prompt("Digite <ENTER> p/voltar");
+
+}
+//********************************************************************/
+function inventarioJogadores() {
+    alert("NOB  SOL  CLE  COM  SERV  TERRA  CAIXA");
+    for (A = 1; A <= F; A++) {
+        texto = Cidade[A] + " / " + Math.trunc(nobres[A]) + " / " + Math.trunc(soldados[A]) + " / " + Math.trunc(bispos[A]) + " / " + Math.trunc(comerciantes[A]) + " / " + Math.trunc(servos[A]) + " / " + Math.trunc(terra[A]) + " / " + Math.trunc(caixa[A]);
+    }
+    Z$ = "";
+    while (Z$ != "C" && Z$ != "c" && Z$ != "0") {
+        Z$ = prompt("Digite <C> para convenções ou <0> para continuar");
+    }
+    if (Z$=="c" || Z$=="C") {
+        mostraConvencoes();
+    }
+}
+//********************************************************************/
+function noticiasDesagradaveis() {
+    alert("### NOTÍCIAS DESAGRADÁVEIS ### \n" + nomeComCidade[jogadorDaVezç] + " acaba de falecer.");
+    posicialSocial[jogadorDaVezç] = -1;
+    Y = Math.trunc(aleatorio() * 8);
+    if (anoCorrente[5] <= 1430) {
+        switch (Y) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                alert("Devido a atentado terrorista do grupo pr¢ Napoleão.");
+                break;
+            case 4:
+                alert("Devido a febre tifóide.");
+                break;
+            case 5:
+                alert("Devido a pesta negra.");
+                break;
+            case 6:
+                alert("Devido a ataque de barbaros durante uma viagem.");
+                break;
+
+            case 7:
+            case 8:
+                alert("Devido a envenenamento alimentar");
+                break;
+        }
     }
     else {
-        tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
+        alert("Devido à velhice após longo governo.");
     }
 }
-
-if (tempoCondenacao[jogadorDaVezç] == -1) {
-    if (posicialSocial[jogadorDaVezç] == -1) {
-        jogadorDaVezç = jogadorDaVezç + 1;
-    }
-    else {
-        tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
-    }
-}
-
-if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && posicialSocial[4] < 1) { gameOver() }
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//********************************************************************/
 function musicaAbertura() {
 
 }
-
+//********************************************************************/
 function apagaTela() {
 
 }
-
+//********************************************************************/
 function aleatorio() {
     return Math.random();
 }
+//********************************************************************/
