@@ -15,10 +15,15 @@ producaoGraos = Math.trunc(Y * terra[jogadorDaVezç] / 1.5 + Y * X + (aleatorio(
 console.log(terra[jogadorDaVezç]);
 console.log(servos[jogadorDaVezç]);
 console.log(producaoGraos);
+testeteste();
 
 
 function aleatorio() { //********************************** TRANSFERIDA
     return Math.random();
+}
+
+function testeteste(){
+    console.log("Teste:"+terra[jogadorDaVezç]);
 }
 
 

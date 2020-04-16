@@ -42,8 +42,9 @@ var C1 = 0;
 var S1 = 0;
 var I1 = 0;
 var J = 0;
-var I=-1;
+var I = -1;
 var numeroJogadores = 0;
+var R = 0;
 
 anoCorrente[5] = 1400;
 Cidade[1] = "GÊNOVA";
@@ -193,6 +194,7 @@ function inventarioJogadores() { //TRANSFERIDO
 function noticiasDesagradaveis() { //TRANSFERIDO
     alert("### NOTÍCIAS DESAGRADÁVEIS ### \n" + nomeComCidade[jogadorDaVezç] + " acaba de falecer.");
     posicialSocial[jogadorDaVezç] = -1;
+    var Y = 0;
     Y = Math.trunc(aleatorio() * 8);
     if (anoCorrente[5] <= 1430) {
         switch (Y) {
@@ -222,7 +224,7 @@ function noticiasDesagradaveis() { //TRANSFERIDO
     else {
         alert("Devido à velhice após longo governo.");
     }
-    inventarioJogadores(); 
+    inventarioJogadores();
 }
 
 
@@ -243,8 +245,9 @@ function servosMorreram(A) {//Verificar o que é e de onde vem o A linha 176
 
 
 function colheita() {
-    var DD=0;
-    W = 0;
+    var DD = 0;
+    var Y = 0;
+    var W = 0;
     while (W < 1 || W > 5) {
         W = Math.trunc((Math.trunc(aleatorio() * 5) + Math.trunc(aleatorio() * 6)) / 2) + 1;
     }
@@ -275,11 +278,18 @@ function colheita() {
     R = Math.trunc(aleatorio() * 50);
     if (R == 0) { R = 1; }
     reserva[jogadorDaVezç] = (reserva[jogadorDaVezç] * 100 - reserva[jogadorDaVezç] * R) / 100;
-    X = Math.trunc(servos[jogadorDaVezç] - moinhos[jogadorDaVezç] * 100);
+    var X = Math.trunc(servos[jogadorDaVezç] - moinhos[jogadorDaVezç] * 100);
     if (X < 0) { X = 1; }
     Y = W - .5
     DD = W * (servos[jogadorDaVezç] - X);
     if (DD == 0) { DD = 1; }
+
+    console.log(Y);
+    console.log(terra[jogadorDaVezç]);
+    console.log(X);
+    console.log(servos[jogadorDaVezç]);
+    console.log(DD);
+
     producaoGraos = Math.trunc(Y * terra[jogadorDaVezç] / 1.5 + Y * X + (aleatorio() * servos[jogadorDaVezç]) - DD);
     console.log(producaoGraos);
     reserva[jogadorDaVezç] = Math.trunc(reserva[jogadorDaVezç] + producaoGraos);
@@ -675,7 +685,7 @@ function mapa() {
 
 function investimentosEstado() {
     if (caixa[jogadorDaVezç] < -30000) { } //THEN 660 ****************** VERIFICAR
-    I=-1;
+    I = -1;
     while (I < 0 || I > 7) {
         I = prompt(Titulo[posicialSocial[jogadorDaVezç]] + sexo0H8[jogadorDaVezç] + nomeComCidade[jogadorDaVezç] + "\n INVESTIMENTOS DO ESTADO: \n 1. mercados (1000 florins,cada) \n 2. moinhos (2000 florins,cada)\n 3. palacios (parte - 3000 florins)\n 4. catedrais (parte - 5000 florins) \n 5. Gastos militares (formação de um pelotão - 500 florins)\n DISPONIBILIDADE CAIXA:" + Math.trunc(caixa[jogadorDaVezç]) + " florins\n Que Investimento fara? (ou aperte <6> para ver o comparativo dos jogadores ou <7> p/mapear ou <0> para continuar");
     }
@@ -917,6 +927,6 @@ function aleatorio() { //********************************** TRANSFERIDA
     return Math.random();
 }
 
-function proximoJogador(){
+function proximoJogador() {
     ///IMPLEMENTAR
 }
