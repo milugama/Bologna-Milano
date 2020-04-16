@@ -1,13 +1,6 @@
-// Far from being finalized! ****************************************************************** FEITO ATÉ LINHA 100
-// Longe de ser finalizado! *******************************************************************
-// 1 KEY OFF:SCREEN0:BLOAD"BOLOGNA.BIN",S: 2 COLOR 6,5:WIDTH 39: 3 LOCATE12,10
 alert("BOLOGNA & MILANO");
-musicaAbertura();
 alert("Bologna & Milano ‚ um jogo espetacular!");
-musicaAbertura();
-apagaTela();
 alert("Que vai testar sua capacidade p/administrar uma cidade, um estado ou uma nação.");
-musicaAbertura();
 var mercados = Array(4); // mercados
 var palacios = Array(4); // palaciosç
 var catedrais = Array(4);
@@ -49,6 +42,7 @@ var C1 = 0;
 var S1 = 0;
 var I1 = 0;
 var J = 0;
+var I=-1;
 var numeroJogadores = 0;
 
 anoCorrente[5] = 1400;
@@ -73,15 +67,42 @@ Titulo[14] = "GRÃO-DUQUESA ";
 Titulo[15] = "PRINCESA ";
 Titulo[16] = "* RAINHA * ";
 //63 CLS
+
+
+inicioJogo();
+colheita(); //127 GOSUB 181; // colheita
+ratosComeram();
+opcoesEconomicas(); // opções econômicas
+fornecerGrao(); //129 GOSUB 331 //fornecimento de grãos
+opcoesFinanceiras(); //130 GOSUB 286 // opções financeiras
+pestes(); //131 GOSUB 639 // pestes
+mapa(); //132 GOSUB 430 //mapa
+investimentosEstado(); //133 GOSUB 509 //investimentos do estado
+verificarPromocao(); //134 GOSUB 580 //verificacao de promoção
+proximoJogador(); // 135 GOTO 111 //MUDA PARA PRÓXIMO JOGADOR ******* IMPLEMENTAR
+
+
+
 function inicioJogo() { //********************************** TRANSFERIDA
+    //variáveisGlobais
+    O = 0; // não encontrei uso para ela.
+    clima = "";
+    precoGrao = 0;
+    precoTerra = 0;
+    producaoGraos = 0;
+    demanda = 0;
+    zAuxiliar = 0;
+    //melhorar nome das variáveis abaixo depois
+    C1 = 0;
+    S1 = 0;
+    I1 = 0;
+    J = 0;
+    numeroJogadores = 0;
 
     while (numeroJogadores < 2 || numeroJogadores > 4) {
         numeroJogadores = prompt("Quantas pessoas (2 a 4) vão participar");
     }
-    //F = VAL(F$);
-    //66 CLS: BEEP
-    //67 LOCATE  5, 10: PRINT"Ir±o participar"; F; "pessoas,OK?"
-    //68 FOR K = 1 TO  500: NEXT K
+
     for (var A = 1; A <= numeroJogadores; A++) {
         //70 CLS: BEEP
         nome[A] = prompt("Quem é o governante de " + Cidade[A] + " ?");
@@ -111,59 +132,49 @@ function inicioJogo() { //********************************** TRANSFERIDA
     if (F$ == "s" || F$ == "S") {
         alert("INSTRUÇÕES \n A partir de agora  você será o governante de uma cidade-estado do século  XV.\n A cada período de bom governo você receberá títulos cada vez maiores. \n A expectativa de vida naquela época era muito curta, logo você disporá de pouco tempo para governar. \n Quem primeiro chegar a REI ou RAINHA será o vencedor do jogo. \n O tamanho da torre no canto superior esquerdo indicará se suas defesas são adequadas. \n O boneco em posição alta significa terras em franca produção, caso contrário você precisará de mais servos. \n Uma boa distribuição de grãos à população, aumentará a taxa de natalidade e incentivará a migração de novos servos. \n Taxas e impostos elevados aumentam a arrecadação mas afetam a economia da nação. \n Faça um governo democrático e lembre-se que é sempre bom comprar na baixa para vender na alta.\n BOA  SORTE !");
     }
-    alert("NÍVEIS DO JOGO: \n 1. Débil mental \n 1. Aprendiz \n 2. Aventureiro \n 3. Mestre \n 4. Grande mestre");
-    nivelDoJogo = prompt("Em que nível deseja jogar: ");
+    nivelDoJogo = 0;
+    while (nivelDoJogo < 1 || nivelDoJogo > 4) {
+        nivelDoJogo = prompt("NÍVEIS DO JOGO: \n 1. Aprendiz \n 2. Aventureiro \n 3. Mestre \n 4. Grande mestre\n \n Em que nível deseja jogar: ");
+    }
     nivelDoJogo = nivelDoJogo + 2 + 2 * nivelDoJogo;
     jogadorDaVezç = jogadorDaVezç + 1;
-}
 
-if (jogadorDaVezç > numeroJogadores) {
-    anoCorrente[5] = anoCorrente[5] + 1;
-    jogadorDaVezç = 1;
-}
-else {
-    if (anoCorrente[5] >= limitedeVida[jogadorDaVezç]) {
-        noticiasDesagradaveis();
-    }
 
-}
-
-if (variavelNaoDescoberta[jogadorDaVezç] != 1) {
-    if (posicialSocial[jogadorDaVezç] == -1) {
-        jogadorDaVezç = jogadorDaVezç + 1;
+    if (jogadorDaVezç > numeroJogadores) {
+        anoCorrente[5] = anoCorrente[5] + 1;
+        jogadorDaVezç = 1;
     }
     else {
-        tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
+        if (anoCorrente[5] >= limitedeVida[jogadorDaVezç]) {
+            noticiasDesagradaveis();
+        }
+
     }
+
+    if (variavelNaoDescoberta[jogadorDaVezç] != 1) {
+        if (posicialSocial[jogadorDaVezç] == -1) {
+            jogadorDaVezç = jogadorDaVezç + 1;
+        }
+        else {
+            tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
+        }
+    }
+
+    if (tempoCondenacao[jogadorDaVezç] == -1) {
+        if (posicialSocial[jogadorDaVezç] == -1) {
+            jogadorDaVezç = jogadorDaVezç + 1;
+        }
+        else {
+            tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
+        }
+    }
+
+    if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && posicialSocial[4] < 1) { gameOver() }
+
+    if (anoCorrente[5] >= limitedeVida[jogadorDaVezç]) { noticiasDesagradaveis() }; //126
+
 }
 
-if (tempoCondenacao[jogadorDaVezç] == -1) {
-    if (posicialSocial[jogadorDaVezç] == -1) {
-        jogadorDaVezç = jogadorDaVezç + 1;
-    }
-    else {
-        tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] - 1;
-    }
-}
-
-if (posicialSocial[1] < 1 && posicialSocial[2] < 1 && posicialSocial[3] < 1 && posicialSocial[4] < 1) { gameOver() }
-
-
-//122 GOTO 126;
-//125 GOTO 112;
-if (anoCorrente[5] >= limitedeVida[jogadorDaVezç]) { noticiasDesagradaveis() }; //126
-colheita(); //127 GOSUB 181; // colheita
-opcoesEconomicas(); // opções econômicas
-fornecerGrao(); //129 GOSUB 331 //fornecimento de grãos
-opcoesFinanceiras(); //130 GOSUB 286 // opções financeiras
-pestes(); //131 GOSUB 639 // pestes
-mapa(); //132 GOSUB 430 //mapa
-investimentosEstado(); //133 GOSUB 509 //investimentos do estado
-verificarPromocao(); //134 GOSUB 580 //verificacao de promoção
-
-//
-proximoJogador(); // 135 GOTO 111 //MUDA PARA PRÓXIMO JOGADOR ******* IMPLEMENTAR
-//
 
 function inventarioJogadores() { //TRANSFERIDO
     alert("NOB  SOL  CLE  COM  SERV  TERRA  CAIXA");
@@ -211,21 +222,10 @@ function noticiasDesagradaveis() { //TRANSFERIDO
     else {
         alert("Devido à velhice após longo governo.");
     }
+    inventarioJogadores(); 
 }
 
 
-
-
-//163 PRINT: PRINT "APERTE RETURN": FORK = 1TO1000: NEXT
-//164 prompt Z$
-//165 IF F = 1 THEN 725
-//166 GOSUB 430
-
-inventarioJogadores(); //167 GOSUB 136
-
-//168 GOTO 112
-caixa[jogadorDaVezç] = Math.trunc(caixa[jogadorDaVezç]); //169
-//170 RETURN
 
 function servosNasceram(A) { //Verificar o que é e de onde vem o A linha 171
     Z = (aleatorio() * A) * servos[jogadorDaVezç] / 100;
@@ -242,8 +242,8 @@ function servosMorreram(A) {//Verificar o que é e de onde vem o A linha 176
 }
 
 
-//Colheita - 181
 function colheita() {
+    var DD=0;
     W = 0;
     while (W < 1 || W > 5) {
         W = Math.trunc((Math.trunc(aleatorio() * 5) + Math.trunc(aleatorio() * 6)) / 2) + 1;
@@ -281,10 +281,11 @@ function colheita() {
     DD = W * (servos[jogadorDaVezç] - X);
     if (DD == 0) { DD = 1; }
     producaoGraos = Math.trunc(Y * terra[jogadorDaVezç] / 1.5 + Y * X + (aleatorio() * servos[jogadorDaVezç]) - DD);
+    console.log(producaoGraos);
     reserva[jogadorDaVezç] = Math.trunc(reserva[jogadorDaVezç] + producaoGraos);
     demanda = nobres[jogadorDaVezç] * 100 + catedrais[jogadorDaVezç] * 40 + comerciantes[jogadorDaVezç] * 30 + soldados[jogadorDaVezç] * 10 + servos[jogadorDaVezç] * 5;
     precoTerra = Math.trunc((100 * W + Math.trunc(aleatorio() * 9) + Math.trunc(aleatorio() * 9)) / 10);
-    precoTerra = (anoCorrente[5] - 1400 + L) / 10;
+    precoTerra = (anoCorrente[5] - 1400 + precoTerra) / 10;
     Z = 6 - W;
     precoGrao = Math.trunc((Math.trunc(aleatorio() * 5) + Math.trunc(aleatorio() * 5) + Z * 10) / (5 + 2 * Y) * 30);
 }
@@ -292,6 +293,7 @@ function colheita() {
 
 function ratosComeram() {
     alert("Os ratos comeram" + R + " % da reserva de grãos dos silos de armazenagem \n" + clima + "\n Produção de grãos: " + producaoGraos + " sacas.");
+    console.log(producaoGraos);
     mostraSituacaoAno();
 }
 
@@ -578,9 +580,9 @@ function rendimentoMercadoMoinhos() { //402
     if ((terra[jogadorDaVezç] / 1000) > soldados[jogadorDaVezç]) {
         invasao();
     }
-    if (terra[jogadorDaVezç] / 500) >= soldados[jogadorDaVezç]) {
+    if ((terra[jogadorDaVezç] / 500) >= soldados[jogadorDaVezç]) {
         for (A = 1; A <= 4; A++) {
-            if (soldados[A] > (soldados[jogadorDaVezç] * 2.4) { invasao(); }
+            if (soldados[A] > (soldados[jogadorDaVezç] * 2.4)) { invasao(); }
         }
 
     }
@@ -673,7 +675,8 @@ function mapa() {
 
 function investimentosEstado() {
     if (caixa[jogadorDaVezç] < -30000) { } //THEN 660 ****************** VERIFICAR
-    while (Z < 0 || Z > 7) {
+    I=-1;
+    while (I < 0 || I > 7) {
         I = prompt(Titulo[posicialSocial[jogadorDaVezç]] + sexo0H8[jogadorDaVezç] + nomeComCidade[jogadorDaVezç] + "\n INVESTIMENTOS DO ESTADO: \n 1. mercados (1000 florins,cada) \n 2. moinhos (2000 florins,cada)\n 3. palacios (parte - 3000 florins)\n 4. catedrais (parte - 5000 florins) \n 5. Gastos militares (formação de um pelotão - 500 florins)\n DISPONIBILIDADE CAIXA:" + Math.trunc(caixa[jogadorDaVezç]) + " florins\n Que Investimento fara? (ou aperte <6> para ver o comparativo dos jogadores ou <7> p/mapear ou <0> para continuar");
     }
     if (I == 7) { mapa(); }
@@ -726,266 +729,194 @@ function mostraConvencoes() { //TRANSFERIDO
 
 }
 
-580 Z = 0
-581 A = mercados[jogadorDaVezç]
-582 GOSUB 627
-583 A = palacios[jogadorDaVezç]
-584 GOSUB 627
-585 A = catedrais[jogadorDaVezç]
-586 GOSUB 627
-587 A = moinhos[jogadorDaVezç]
-588 GOSUB 627
-589 A = caixa[jogadorDaVezç] / 5000
-590 GOSUB 627
-591 A = (terra[jogadorDaVezç] - 5000) / 4000
-592 GOSUB 627
-593 A = comerciantes[jogadorDaVezç] / 50
-594 GOSUB 627
-595 A = nobres[jogadorDaVezç] / 5
-596 GOSUB 627
-597 A = soldados[jogadorDaVezç] / 50
-598 GOSUB 627
-599 A = bispos[jogadorDaVezç] / 10
-600 GOSUB 627
-601 A = servos[jogadorDaVezç] / 2000
-602 GOSUB 627
-603 A = scorePlayer[jogadorDaVezç] / 5
-604 GOSUB 627
-605 A = Math.trunc(Z / nivelDoJogo - formaJustica[jogadorDaVezç] + 1)
-606 IF A > 8 THEN A = 8
-607 IF(anoCorrente[5) + 2) != limitedeVida[jogadorDaVezç] THEN 610
-608 posicialSocial[jogadorDaVezç] = posicialSocial[jogadorDaVezç] + 1
-609 GOTO 612
-610 IF posicialSocial[jogadorDaVezç] >= A GOTO 626
-611 posicialSocial[jogadorDaVezç] = A
-612 IF posicialSocial[jogadorDaVezç] = 8 THEN 630
-613 CLS
-614 LOCATE 5, 10: PRINT"NNËËË  CONGRATULA€™ES ËËËNN"
-615 PRINT: PRINT: PRINT nomeComCidade[jogadorDaVezç]
-616 PRINT: PRINT  "Vocˆ agora ‚ "; Titulo[posicialSocial[jogadorDaVezç] + sexo0H8[jogadorDaVezç])
-617 nomeComCidade[jogadorDaVezç] = nome[jogadorDaVezç] + " de " + Cidade[jogadorDaVezç]
-618 PLAY"CDEFGABR2", "L8CDEFGABR2": PLAY"T240L6V12", "T240L2V9": PLAY"R8O6GABO7DCCEB", "O4GO5GE"
-619 PLAY"DG#GDO6BGAB", "O4BO5EO4E"
-620 PLAY"O7CDEDCO6BABG", "O4ABO5C"
-621 PLAY"F#GADF#AO7CO6BC", "O5DF#D"
-622 PLAY"BGABO7DCCED", "GGC"
-623 PLAY"DGF#DO6BGAB", "O4BO5ED"
-624 PLAY"EO7DCO6BAGDGF#G2", "CC#DG"
-625 FOR K = 1 TO 1000 : NEXT
-626 RETURN
-627 IF A > 10 THEN A = 10
-628 Z = Z + A
-629 RETURN
-630 CLS
+function verificarPromocao() {
+    Z = 0;
+    A = mercados[jogadorDaVezç];
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = palacios[jogadorDaVezç];
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = catedrais[jogadorDaVezç];
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = moinhos[jogadorDaVezç];
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = caixa[jogadorDaVezç] / 5000;
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = (terra[jogadorDaVezç] - 5000) / 4000;
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = comerciantes[jogadorDaVezç] / 50;
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = nobres[jogadorDaVezç] / 5;
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = soldados[jogadorDaVezç] / 50;
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = bispos[jogadorDaVezç] / 10;
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = servos[jogadorDaVezç] / 2000;
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = scorePlayer[jogadorDaVezç] / 5;
+    if (A > 10) { A = 10; }
+    Z = Z + A;
+    A = Math.trunc(Z / nivelDoJogo - formaJustica[jogadorDaVezç] + 1);
+    if (A > 8) { A = 8; }
 
+    if ((anoCorrente[5] + 2) != limitedeVida[jogadorDaVezç]) {
+        if (posicialSocial[jogadorDaVezç] < A) {
+            posicialSocial[jogadorDaVezç] = A
+        }
+        else {
+            posicialSocial[jogadorDaVezç] = posicialSocial[jogadorDaVezç] + 1;
+        }
+
+        if (posicialSocial[jogadorDaVezç] == 8) { gameOver(); }
+
+        alert("CONGRATULAÇÕES \n" + nomeComCidade[jogadorDaVezç] + "\n Você agora é " + Titulo[posicialSocial[jogadorDaVezç]] + sexo0H8[jogadorDaVezç] + nomeComCidade[jogadorDaVezç] + nome[jogadorDaVezç] + " de " + Cidade[jogadorDaVezç]);
+
+    }
+
+}
 
 function gameOver() {
-    631 LOCATE 10, 10: PRINT"ÌÌÌ GAME OVER ËËË"
-    632 FOR K = 1 TO 1000: NEXT
-    633 CLS: LOCATE  7, 10: PRINT  Titulo[posicialSocial[jogadorDaVezç] + sexo0H8[jogadorDaVezç]); nomeComCidade[jogadorDaVezç]
-    634 PRINT: PRINT: PRINT "      ÁÁÁÁÁÁ    VENCEU    ÁÁÁÁÁÁÁ"
-    635 GOSUB 795 //<-- Só musiquinha
-    636 GOSUB 430
+    alert("GAME OVER\n" + Titulo[posicialSocial[jogadorDaVezç]] + sexo0H8[jogadorDaVezç] + nomeComCidade[jogadorDaVezç] + "Você VENCEU!");
+    mapa();
     inventarioJogadores(); //637 GOSUB 136
-    638 GOTO 725
+    inicioJogo();
 }
 
 
-639 PEST = Math.trunc(aleatorio(2) * 100)
-640 IF PEST = Math.trunc((aleatorio() * 1000) / 10) THEN 642
-641 RETURN
-642 CLS
-643 PP = Math.trunc(aleatorio() * 70)
-644 NN = Math.trunc(nobres[jogadorDaVezç] * PP / 100) + 1
-645 nobres[jogadorDaVezç] = nobres[jogadorDaVezç] - NN
-646 CC = Math.trunc(bispos[jogadorDaVezç] * PP / 100) + 2
-647 bispos[jogadorDaVezç] = bispos[jogadorDaVezç] - CC
-648 MM = Math.trunc(comerciantes[jogadorDaVezç] * PP / 100) + 2
-649 comerciantes[jogadorDaVezç] = comerciantes[jogadorDaVezç] - MM
-650 SS = Math.trunc(servos[jogadorDaVezç] * PP / 100) + 2
-651 servos[jogadorDaVezç] = servos[jogadorDaVezç] - SS
-652 PRINT: PRINT" ËËËËù NOTICIAS CATASTROFICAS ùËËËËË"
-653 GOSUB 775
-654 PRINT: PRINT"A peste negra varreu sua cidade vitimando:"
-655 PRINT NN; "  nobres +"
-656 PRINT CC; "  bispos e padres +"
-657 PRINT MM; "  comerciantes +"
-658 PRINT SS; "  servos +"
-659 FOR G = 1 TO 5000: NEXT: RETURN
+function pestes() {
+    PEST = Math.trunc(aleatorio() * 100);
+    if (PEST = Math.trunc((aleatorio() * 1000) / 10)) {
+
+        PP = Math.trunc(aleatorio() * 70);
+        NN = Math.trunc(nobres[jogadorDaVezç] * PP / 100) + 1;
+        nobres[jogadorDaVezç] = nobres[jogadorDaVezç] - NN;
+        CC = Math.trunc(bispos[jogadorDaVezç] * PP / 100) + 2;
+        bispos[jogadorDaVezç] = bispos[jogadorDaVezç] - CC;
+        MM = Math.trunc(comerciantes[jogadorDaVezç] * PP / 100) + 2;
+        comerciantes[jogadorDaVezç] = comerciantes[jogadorDaVezç] - MM;
+        SS = Math.trunc(servos[jogadorDaVezç] * PP / 100) + 2;
+        servos[jogadorDaVezç] = servos[jogadorDaVezç] - SS;
+        alert("NOTÍCIAS CATASTRÓFICAS \n A peste negra varreu sua cidade vitimando: \n" + NN + " nobres +\n" + CC + " bispos e padres +\n" + MM + "  comerciantes +\n" + SS + " servos.");
+    }
+}
 
 function falencia() {
-    660 CLS
-    661 LOCATE 4, 10: PRINT Titulo[posicialSocial[jogadorDaVezç] + sexo0H8[jogadorDaVezç]); nomeComCidade[jogadorDaVezç]: PRINT: PRINT: PRINT      "ÌÌÌ  FALIU ÌÌÌ"
-    662 GOSUB 775: FORK = 1TO5000: NEXT
-    663 IF caixa[jogadorDaVezç] <= (-50000! * posicialSocial[jogadorDaVezç] / 3) THEN 730
-    664 CLS: LOCATE 2, 10: PRINT" Os Bancos tomaram seus bens"
-    665 GOSUB 775
-    666 CLS
-    667 mercados[jogadorDaVezç] = Math.trunc(mercados[jogadorDaVezç] * (Math.trunc(aleatorio() * 10) / 10))
-    668 palacios[jogadorDaVezç] = Math.trunc(palacios[jogadorDaVezç] * (Math.trunc(aleatorio() * 10) / 10))
-    669 catedrais[jogadorDaVezç] = Math.trunc(catedrais[jogadorDaVezç] * (Math.trunc(aleatorio() * 10) / 10))
-    670 moinhos[jogadorDaVezç] = Math.trunc(moinhos[jogadorDaVezç] * (Math.trunc(aleatorio() * 10) / 10))
-    671 terra[jogadorDaVezç] = Math.trunc(terra[jogadorDaVezç] * (Math.trunc(aleatorio() * 10) / 10))
-    672 scorePlayer[jogadorDaVezç] = 1
-    673 caixa[jogadorDaVezç] = 100
-    674 comerciantes[jogadorDaVezç] = Math.trunc(comerciantes[jogadorDaVezç] * Math.trunc(aleatorio() * 7) / 10)
-    675 reserva[jogadorDaVezç] = reserva[jogadorDaVezç] - 5000
-    676 IF terra[jogadorDaVezç] < 5000 THEN terra[jogadorDaVezç] = 5000
-    677 RETURN
+    alert(Titulo[posicialSocial[jogadorDaVezç]] + sexo0H8[jogadorDaVezç] + nomeComCidade[jogadorDaVezç] + "\n **** FALIU ****");
+    if (caixa[jogadorDaVezç] <= (-50000 * posicialSocial[jogadorDaVezç] / 3)) { confiscoDeBens(); }
+    else {
+        alert(" Os Bancos tomaram seus bens");
+        mercados[jogadorDaVezç] = Math.trunc(mercados[jogadorDaVezç] * (Math.trunc(aleatorio() * 10) / 10));
+        palacios[jogadorDaVezç] = Math.trunc(palacios[jogadorDaVezç] * (Math.trunc(aleatorio() * 10) / 10));
+        catedrais[jogadorDaVezç] = Math.trunc(catedrais[jogadorDaVezç] * (Math.trunc(aleatorio() * 10) / 10));
+        moinhos[jogadorDaVezç] = Math.trunc(moinhos[jogadorDaVezç] * (Math.trunc(aleatorio() * 10) / 10));
+        terra[jogadorDaVezç] = Math.trunc(terra[jogadorDaVezç] * (Math.trunc(aleatorio() * 10) / 10));
+        scorePlayer[jogadorDaVezç] = 1;
+        caixa[jogadorDaVezç] = 100;
+        comerciantes[jogadorDaVezç] = Math.trunc(comerciantes[jogadorDaVezç] * Math.trunc(aleatorio() * 7) / 10);
+        reserva[jogadorDaVezç] = reserva[jogadorDaVezç] - 5000;
+        if (terra[jogadorDaVezç] < 5000) { terra[jogadorDaVezç] = 5000; }
+    }
 }
 
 function invasao() {
     Z = 5;
-    679 FOR A = 1 TO numeroJogadores
-    680 IF A = 6 THEN 684
-    681 IF soldados[A) < soldados[jogadorDaVezç] THEN 684
-    682 IF soldados[A) < (1.2 * (terra[A) / 1000)) THEN 684
-    683 IF soldados[A) > soldados[Z) THEN Z = A
-    684 NEXT
-    685 IF Z = 5 THEN Cidade[5) = "BAR°O "
-    686 nomeComCidade[5) = "MALONE DE VINCENZA"
-    687 A1 = Math.trunc(aleatorio() * 9000 + 1000)
-    688 GOTO  690
-    689 A1 = soldados[Z) * 1000 - terra[Z) / 3
-    690 IF A1 > (terra[jogadorDaVezç] - 5000) THEN A1 = (terra[jogadorDaVezç] - 5000) / 2
-    691 PRINT: PRINT"    Digite <0> p/continuar "
-    692 GOSUB 708
-    693 IF numeroJogadores = 1 THEN 697
-    694 CLS
-    695 LOCATE 5, 10: PRINT Titulo[posicialSocial[Z) + sexo0H8[Z)); nomeComCidade[Z); " invadiu e anexou "; A1; "hectares de terras"
-    696 GOTO 699
-    697 CLS
-    698 LOCATE 5, 10: PRINT Titulo[Z); nomeComCidade[Z); " invadiu e anexou "; A1; "hectares de terras"
-    699 terra[Z) = terra[Z) + A1
-    700 terra[jogadorDaVezç] = terra[jogadorDaVezç] - A1
-    701 Z = Math.trunc(aleatorio() * 40)
-    702 IF Z > (soldados[jogadorDaVezç] - 15) THEN Z = soldados[jogadorDaVezç] - 15
-    703 LOCATE 5, 13: PRINT Titulo[posicialSocial[jogadorDaVezç] + sexo0H8[jogadorDaVezç]); ""; nomeComCidade[jogadorDaVezç]; " perdeu"; Z; " soldados em batalha"
-    704 soldados[jogadorDaVezç] = soldados[jogadorDaVezç] - Z
-    705 PRINT: PRINT "Aperte <RETURN>"
-    706 prompt Z$
-    707 RETURN
-    708 Z$ = INKEY$
-    709 IF Z$ = "" THEN 708
-    710 RETURN
+    for (A = 1; A <= numeroJogadores; numeroJogadores++) {
+        // perguntas inúteis IF soldados[A] < soldados[jogadorDaVezç] THEN 684
+        // perguntas inúteis682 IF soldados[A] < (1.2 * (terra[A] / 1000)) THEN 684
+        if (soldados[A] > soldados[Z]) { Z = A; }
+    }
+
+    if (Z == 5) {
+        Cidade[5] = "BARÃO ";
+        nomeComCidade[5] = "MALONE DE VINCENZA";
+        A1 = Math.trunc(aleatorio() * 9000 + 1000);
+
+        // linha jamais usada --> 689 A1 = soldados[Z) * 1000 - terra[Z) / 3
+    }
+    if (A1 > (terra[jogadorDaVezç] - 5000)) {
+        A1 = (terra[jogadorDaVezç] - 5000) / 2;
+        temp = prompt("Digite <ENTER> p/continuar.");
+    }
+    if (numeroJogadores != 1) {
+        alert(Titulo[posicialSocial[Z]] + sexo0H8[Z] + nomeComCidade[Z] + "\n invadiu e anexou " + A1 + "hectares de suas terras.");
+    } else {
+        alert(Titulo[Z] + nomeComCidade[Z] + " invadiu e anexou " + A1 + " hectares de suas terras.");
+    }
+
+    terra[Z] = terra[Z] + A1;
+    terra[jogadorDaVezç] = terra[jogadorDaVezç] - A1;
+    Z = Math.trunc(aleatorio() * 40);
+    if (Z > (soldados[jogadorDaVezç] - 15)) {
+        Z = soldados[jogadorDaVezç] - 15;
+    }
+    alert(Titulo[posicialSocial[jogadorDaVezç]] + sexo0H8[jogadorDaVezç] + nomeComCidade[jogadorDaVezç] + " perdeu " + Z + " soldados em batalha");
+    soldados[jogadorDaVezç] = soldados[jogadorDaVezç] - Z;
+    Z$ = prompt("Aperte <ENTER>");
+}
+
+function gameOverSemVencedores() {
+    alert("**** GAME OVER ****");
+    F$ = prompt("Quer jogar novamente (S/N)");
+    if (F$ == "S" || F$ == "s") { inicioJogo(); } else { desligarJogo() };
+}
+
+function confiscoDeBens() {
+    alert("Os Bancos confiscaram seus bens...");
+    if (caixa[jogadorDaVezç] <= -20000 && caixa[jogadorDaVezç] > -35000) {
+        tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] + 1;
+    }
+    if (caixa[jogadorDaVezç] <= -35000 && caixa[jogadorDaVezç] > -50000) {
+
+        tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] + Math.trunc(aleatorio() * 4);
+        if (tempoCondenacao[jogadorDaVezç] = 0) { tempoCondenacao[jogadorDaVezç] = 1; }
+    }
+    if (caixa[jogadorDaVezç] <= 50000) {
+        tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] + Math.trunc(aleatorio() * 6);
+        if (tempoCondenacao[jogadorDaVezç] < 2) { tempoCondenacao[jogadorDaVezç] = 3; }
+    }
+    G$ = "o";
+    if (sexo0H8[jogadorDaVezç] = 8) { G$ = "a"; }
+
+    alert(Titulo[posicialSocial[jogadorDaVezç]] + sexo0H8[jogadorDaVezç] + nomeComCidade[jogadorDaVezç] + " foi a julgamento acusad" + G$ + " de fraude \n Desta forma foi condenad" + G$ + " a " + tempoCondenacao[jogadorDaVezç] + " anos de prisão");
+
+    if (numeroJogadores == 1) {
+        anoCorrente[5] = anoCorrente[5] + tempoCondenacao[jogadorDaVezç];
+    }
+    if (numeroJogadores > 1) {
+        variavelNaoDescoberta[jogadorDaVezç] = 1;
+    }
+    mercados[jogadorDaVezç] = 0;
+    palaciosç[jogadorDaVezç] = 0;
+    catedrais[jogadorDaVezç] = 0;
+    moinhos[jogadorDaVezç] = 0;
+    terra[jogadorDaVezç] = 4000;
+    scorePlayer[jogadorDaVezç] = 1;
+    caixa[jogadorDaVezç] = 0;
+    comerciantes[jogadorDaVezç] = Math.trunc(comerciantes[jogadorDaVezç] / 4);
+    reserva[jogadorDaVezç] = 5000;
+    // ?
 }
 
 
-725 CLS: LOCATE 10, 10: PRINT" ÌÌÌ GAME OVER ÌÌÌ"
-726 GOSUB 829
-727 LOCATE 2, 10: prompt"Quer jogar novamente (S/N)"; F$
-728 if (F$ = "S" || F$ = "s") THEN 832
-729 if (F$ = "N" || F$ = "n") { desligarJogo() };
-730 CLS: LOCATE 2, 10: PRINT"Os Bancos confiscaram seus bens..." : GOSUB 775: FORK = 1TO3000: NEXT
-731 IF caixa[jogadorDaVezç] <= -20000 AND caixa[jogadorDaVezç] > -35000! THEN 734
-732 IF caixa[jogadorDaVezç] <= -35000! AND caixa[jogadorDaVezç] > -50000! THEN 736
-733 IF caixa[jogadorDaVezç] <= 50000! THEN 739
-734 tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] + 1
-735 GOTO 742
-736 tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] + Math.trunc(aleatorio() * 4)
-737 IF tempoCondenacao[jogadorDaVezç] = 0 THEN tempoCondenacao[jogadorDaVezç] = 1
-738 GOTO 742
-739 tempoCondenacao[jogadorDaVezç] = tempoCondenacao[jogadorDaVezç] + Math.trunc(aleatorio() * 6)
-740 IF tempoCondenacao[jogadorDaVezç] < 2 THEN tempoCondenacao[jogadorDaVezç] = 3
-741 GOTO 742
-742 G$ = "o"
-743 IF sexo0H8[jogadorDaVezç] = 8 THEN G$ = "a"
-744 CLS: LOCATE 4, 10: PRINT Titulo[posicialSocial[jogadorDaVezç] + sexo0H8[jogadorDaVezç]); nomeComCidade[jogadorDaVezç]
-745 PRINT"    Foi a julgamento,acusad"; G$; " de fraude"
-746 PRINT: PRINT"    Desta forma foi condenad"; G$; " a "; tempoCondenacao[jogadorDaVezç]; "anos    de pris„o"
-747 GOSUB 826: FORK = 1TO5000: NEXT
-748 IF numeroJogadores = 1 THEN 751
-749 IF numeroJogadores > 1 THEN variavelNaoDescoberta[jogadorDaVezç] = 1
-750 GOTO 752
-751 anoCorrente[5) = anoCorrente[5) + tempoCondenacao[jogadorDaVezç]
-752 mercados[jogadorDaVezç] = 0
-753 palaciosç[jogadorDaVezç] = 0
-754 catedrais[jogadorDaVezç] = 0
-755 moinhos[jogadorDaVezç] = 0
-756 terra[jogadorDaVezç] = 4000
-757 scorePlayer[jogadorDaVezç] = 1
-758 caixa[jogadorDaVezç] = 0
-759 comerciantes[jogadorDaVezç] = Math.trunc(comerciantes[jogadorDaVezç] / 4)
-760 reserva[jogadorDaVezç] = 5000
-761 GOTO 677
-
-
-function desligarJogo{
-    765 CLS: BEEP: LOCATE 10, 10: PRINT"    F I M "
-    766 GOSUB 775: FOR K = 1 TO 1000: NEXT
-    767 CLS: END
+function desligarJogo() {
+    alert("Fim de Jogo");
 }
-// ************************************************************************************************** { ROTINA MÚSICA DE ABERTURA
-768 PLAY"O2L16BO3BBBO4CO3BABBF#B", "O3L8O2BO3BO4CO3ABF#"
-769 PLAY"O2L16BO3BBBO4CO3BABBF#B", "O3L8O2BO3BO4CO3ABF#"
-770 PLAY"O2L16BO3BF#BABBBO4CO3BO4DO3B", "O2L8BO3F#ABO4CD"
-771 PLAY"O3L16BBO4CO3BABBBGBF#B", "O3L8BO4CO3ABGF#", "O2L2B."
-772 PLAY"O2L16BO3BBBO4CO3BABBBF#B", "O2L8BO3O4CO3ABF#", "O2L2B."
-773 PLAY"O2L16BO3BBBO4CO3BABBBF#B", "O2L8BO3O4CO3ABF#", "O2L2B."
-774 RETURN
-// ************************************************************************************************** ROTINA MÚSICA DE ABERTURA }
-
-775 PLAY"S0M10000V15T180"
-776 PLAY"L4O3GFL8EDECO2BABG"
-777 PLAY"O3L4CEAGBO4L3CO3"
-778 PLAY"L8AGFEL3EL4DGBO4C"
-779 FOR K = 1 TO 1000: NEXT: RETURN
-780 PLAY"R8O6GABO7DCCEB", "O4GO5GE"
-781 PLAY"DG#GDO6BGAB", "O4BO5EO4E"
-782 PLAY"O7CDEDCO6BABG", "O4ABO5C"
-783 PLAY"F#GADF#AO7CO6BA", "O5DF#D"
-784 PLAY"BGABO7DCCED", "GGC"
-785 PLAY"DGF#DO6BGAB", "O4BO5ED"
-786 PLAY"EO7DCO6BAGDGF#G2", "CC#DG"
-787 FOR K = 1 TO 1000: NEXT
-788 RETURN
-789 PLAY"M2000S11T255O3CCEEGGAAA#A#AAGGEE"
-790 PLAY"FFAAO4CCDDD#D#DDCCO3AA"
-791 PLAY"GGBBO4DDEEO3FFAAO4CCDD"
-792 RETURN
-793 SOUND 7, 56: SOUND 8, 15: SOUND 1, 0
-794 SOUND 0, 50: FOR I = 1 TO 200: NEXT: SOUND 0, 100: FOR I = 1 TO 200: NEXT I: GOTO 764
-795 PLAY"v10t180", "v9t180"
-796 PLAY"o4l8deL4f#g", "l4o1do2ao3d"
-797 PLAY"o4l2al4bgea", "l4o1do2ao3do1do2ao3d"
-798 PLAY"o4l2f#.l8edef#ge", "o1l4do2ao3do1do2ao3d"
-799 PLAY"o4l2f#gl4e.l8f#", "o1l4do2ao3do1do2ao3d"
-800 PLAY"o4l2d..l8el4f#g", "l4o1do2ao3do1do2ao3d"
-801 PLAY"o4l4aabgea", "l4o1do2ao3do1do2ao3d"
-802 PLAY"o4l2f#.l8edef#ge", "l4o1do2ao3do1do2ao3d"
-803 PLAY"o4l8f#f#gf#edc#o3bo4c#def#", "l4o1do2ao3do1do2ao3d"
-804 PLAY"o4l2d.l4f#ed", "l4o1do2ao3do1do2ao3d"
-805 PLAY"o4l1f#l4ed", "l4o1Do2ao3Do1Do2ao3d"
-806 PLAY"o4l2a.l4f#ed", "l4o1do2ao3do1do2ao3d"
-807 PLAY"o4l2agl8eeef#", "l4o1do2ao3do1do2ao3d"
-808 PLAY"o4l2d.l8gf#l4ed", "l4o1do2ao3do1do2ao3d"
-809 PLAY"oo4l2f#.l8gf#l4ed", "l4o1do2ao3do1do2ao3d"
-810 PLAY"o4l2a.l8edef#ge", "l4o1do2ao3do1do2ao3d"
-811 PLAY"o4l8f#f#ef#gf#edc#ded#", "o1l4do2ao3do1do2ao3d"
-812 PLAY"o4l2d.l8o3del4f#g", "l4o1do2ao3do1do2ao3d"
-813 PLAY"o3l4aabgea", "l4o1do2ao3do1do2ao3d"
-814 PLAY"o3l2f#.l8edef#ge", "l4o1do2ao3do1do2ao3d"
-815 PLAY"o3l8f#f#gf#edc#o2bo3c#def#", "l1o1d."
-816 PLAY"o3l2d.l4f#ed", "l4o1do2ao3do1do2ao3d"
-817 PLAY"o3l2f#.l4f#ed", "l4o1do2ao3do1do2ao3d"
-818 PLAY"o3l2a.l4f#ed", "l4o1do2ao3do1do2ao3d"
-819 PLAY"o3l4al8gf#edc#o2bo3c#def#", "l1o1d."
-820 PLAY"o3l2d.o4l8gf#l4ed", "l4o1do2ao3do1do2ao3d"
-821 PLAY"o4l2f#.l8gf#ef#dd", "l4o1do2ao3do1do2ao3d"
-822 PLAY"o4l2a.l8gf#ef#ge", "l4o1do2ao3do1do2ao3d"
-823 PLAY"o4l8f#gaf#gagf#edef#", "o1l4do2ao3do1do2ao3d"
-824 PLAY"l1d", "l4o1do2ao3do1d"
-825 RETURN
-826 DATA 100, 125, 112, 170, 170, 112, 100, 125
-827 RESTORE: SOUND 7, 56: SOUND 8, 16: SOUND 1, 0: SOUND 12, 36: FOR I = 1 TO 8: READ A: SOUND 0, A: SOUND 13, 0: FOR P = 1 TO 150: NEXT P: IF I = 4 THEN FOR P = 1 TO 150: NEXT P: NEXT I ELSE NEXT I
-828 RETURN
-829 SOUND 7, 56: SOUND 8, 15: SOUND 1, 0: SOUND 9, 15: SOUND 3, 0
-830 SOUND 0, 190: SOUND 2, 192: FOR I = 1 TO 400: NEXT I: SOUND 0, 250: SOUND 2, 253: FOR I = 1 TO 400: NEXT I
-831 RETURN
-832 SOUND 7, 56: SOUND 8, 15: SOUND 1, 0
-833 FOR L = 230 TO 100 STEP - .5: SOUND 0, L: NEXT L: SOUND 0, 0: FOR I = 1 TO 150: NEXT I
-inicioJogo(); //  834 GOTO 63
 
 function aleatorio() { //********************************** TRANSFERIDA
     return Math.random();
+}
+
+function proximoJogador(){
+    ///IMPLEMENTAR
 }
