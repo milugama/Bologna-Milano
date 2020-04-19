@@ -108,7 +108,7 @@
 107 LOCATE 5,2 :INPUT"Em que n¡vel deseja jogar";F$
 108 IF F$<"1"OR F$>"4"THEN 762
 109 U(5)=VAL(F$)
-110 U(5)=U(5)+2+2*U(5)
+110 U(5)=U(5)+5
 111 E=E+1
 112 IF E > F THEN 123
 // ////////////
